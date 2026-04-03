@@ -1,0 +1,20 @@
+{
+  "description": "Test data for TradingTest – all expected values externalised here",
+
+  "expectedCategoryTabs": [
+    "All",
+    "Favorites"
+  ],
+
+  "minimumPairCount": 5,
+
+  "expectedPairs": [
+    "BTC",
+    "ETH"
+  ],
+
+  "categoryTabSwitchData": [
+    { "tab": "All",  "minPairs": 5 },
+    { "tab": "BTC",  "minPairs": 1 }
+  ]
+}

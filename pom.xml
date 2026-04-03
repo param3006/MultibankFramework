@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.multibank</groupId>
+    <artifactId>multibank-qa-framework</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>MultiBank QA Automation Framework</name>
+    <description>Production-grade Selenium + TestNG framework for trade.multibank.io</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Core versions -->
+        <selenium.version>4.21.0</selenium.version>
+        <testng.version>7.10.2</testng.version>
+        <webdrivermanager.version>5.8.0</webdrivermanager.version>
+
+        <!-- Reporting -->
+        <extentreports.version>5.1.2</extentreports.version>
+        <extentreports-testng.version>1.3.0</extentreports-testng.version>
+
+        <!-- Utility -->
+        <jackson.version>2.17.1</jackson.version>
+        <slf4j.version>2.0.13</slf4j.version>
+        <logback.version>1.5.6</logback.version>
+        <lombok.version>1.18.32</lombok.version>
+        <assertj.version>3.26.0</assertj.version>
+        <faker.version>1.0.2</faker.version>
+
+        <!-- Maven plugins -->
+        <maven-surefire.version>3.2.5</maven-surefire.version>
+        <maven-compiler.version>3.13.0</maven-compiler.version>
+
+        <!-- Default suite (override via -Dsuite=...) -->
+        <suite>suites/full-regression.xml</suite>
+        <browser>chrome</browser>
+        <env>prod</env>
+        <headless>false</headless>
+        <threads>3</threads>
+    </properties>
+
+    <dependencies>
+
+        <!-- ── Selenium WebDriver ─────────────────────────────────── -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- ── WebDriverManager – automatic driver binaries ─────── -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- ── TestNG ─────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+        <!-- ── ExtentReports (HTML) ───────────────────────────────── -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extentreports.version}</version>
+        </dependency>
+
+        <!-- ── ExtentReports TestNG adapter ─────────────────────── -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports-testng-adapter</artifactId>
+            <version>${extentreports-testng.version}</version>
+        </dependency>
+
+        <!-- ── Jackson – JSON / YAML test data ───────────────────── -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- ── Logging ───────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- ── Lombok – boilerplate reduction ────────────────────── -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ── AssertJ – fluent assertions ───────────────────────── -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+        </dependency>
+
+        <!-- ── Java Faker – dynamic test data ────────────────────── -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${faker.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- ── Compiler ─────────────────────────────────────── -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- ── Surefire – test execution ────────────────────── -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire.version}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/${suite}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <systemPropertyVariables>
+                        <browser>${browser}</browser>
+                        <env>${env}</env>
+                        <headless>${headless}</headless>
+                        <threads>${threads}</threads>
+                    </systemPropertyVariables>
+                    <!-- Keep test output in Maven build log -->
+                    <useFile>false</useFile>
+                    <redirectTestOutputToFile>false</redirectTestOutputToFile>
+                    <!-- Do not fail build on test failures (let report decide) -->
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+        <!-- Include YAML / JSON resources in test classpath -->
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
+
+    <!-- Execution profiles ─────────────────────────────────────────── -->
+    <profiles>
+
+        <profile>
+            <id>smoke</id>
+            <properties>
+                <suite>suites/smoke.xml</suite>
+                <threads>2</threads>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>regression</id>
+            <properties>
+                <suite>suites/full-regression.xml</suite>
+                <threads>4</threads>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>cross-browser</id>
+            <properties>
+                <suite>suites/cross-browser.xml</suite>
+                <threads>3</threads>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>headless</id>
+            <properties>
+                <headless>true</headless>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>grid</id>
+            <properties>
+                <suite>suites/grid.xml</suite>
+            </properties>
+        </profile>
+
+    </profiles>
+
+</project>

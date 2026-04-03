@@ -1,0 +1,17 @@
+{
+  "description": "Test data for NavigationTest – all expected values externalised here",
+
+  "expectedNavItems": [
+    "Trade",
+    "Spot",
+    "Convert",
+    "Instant Buy"
+  ],
+
+  "minimumNavLinks": 3,
+
+  "navItemDestinations": [
+    { "link": "Spot",        "url": "spot"    },
+    { "link": "Convert",     "url": "convert" }
+  ]
+}

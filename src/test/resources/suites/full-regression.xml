@@ -1,0 +1,37 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  Full Regression Suite
+  Run: mvn test -Psuite=suites/full-regression.xml
+  Or:  mvn test -Pregression
+-->
+<suite name="MultiBank Full Regression" verbose="1" parallel="classes" thread-count="${threads}">
+
+    <listeners>
+        <listener class-name="com.multibank.listeners.TestListener"/>
+        <listener class-name="com.multibank.listeners.RetryTransformer"/>
+    </listeners>
+
+    <parameter name="browser"  value="${browser}"/>
+    <parameter name="headless" value="${headless}"/>
+    <parameter name="env"      value="${env}"/>
+
+    <test name="Navigation Tests" parallel="methods" thread-count="2">
+        <classes>
+            <class name="com.multibank.tests.NavigationTest"/>
+        </classes>
+    </test>
+
+    <test name="Trading Tests" parallel="methods" thread-count="2">
+        <classes>
+            <class name="com.multibank.tests.TradingTest"/>
+        </classes>
+    </test>
+
+    <test name="Content Tests" parallel="methods" thread-count="2">
+        <classes>
+            <class name="com.multibank.tests.ContentTest"/>
+        </classes>
+    </test>
+
+</suite>

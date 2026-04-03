@@ -1,0 +1,151 @@
+name: MultiBank QA – Selenium/TestNG CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run full regression nightly at 02:00 UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Test suite to run'
+        required: false
+        default: 'suites/smoke.xml'
+        type: choice
+        options:
+          - suites/smoke.xml
+          - suites/full-regression.xml
+          - suites/cross-browser.xml
+      browser:
+        description: 'Browser'
+        required: false
+        default: 'chrome'
+        type: choice
+        options: [ chrome, firefox, edge ]
+      headless:
+        description: 'Run headless'
+        required: false
+        default: 'true'
+
+# Cancel in-flight runs on new pushes to the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: ${{ matrix.browser }} – ${{ matrix.suite-label }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - browser: chrome
+            suite: suites/smoke.xml
+            suite-label: smoke
+          - browser: firefox
+            suite: suites/smoke.xml
+            suite-label: smoke
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Java 17 ───────────────────────────────────────────────────
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # ── Browser setup ─────────────────────────────────────────────
+      - name: Set up Chrome
+        if: matrix.browser == 'chrome'
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Set up Firefox
+        if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-firefox@v1
+
+      # ── Run tests ─────────────────────────────────────────────────
+      - name: Run Tests
+        env:
+          BASE_URL: ${{ secrets.BASE_URL || 'https://trade.multibank.io' }}
+        run: |
+          mvn test \
+            -Dsuite=${{ matrix.suite }} \
+            -Dbrowser=${{ matrix.browser }} \
+            -Dheadless=true \
+            -Dthreads=2 \
+            -Denv=prod \
+            --no-transfer-progress \
+            -B
+
+      # ── Upload reports & screenshots ──────────────────────────────
+      - name: Upload HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-report-${{ matrix.browser }}-${{ matrix.suite-label }}
+          path: reports/html/
+          retention-days: 30
+
+      - name: Upload Screenshots (failures only)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.browser }}-${{ matrix.suite-label }}
+          path: reports/screenshots/
+          retention-days: 14
+
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.browser }}-${{ matrix.suite-label }}
+          path: reports/logs/
+          retention-days: 7
+
+      # ── JUnit results for GitHub PR check annotations ─────────────
+      - name: Publish JUnit Results
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: TestNG Results (${{ matrix.browser }})
+          path: reports/junit.xml
+          reporter: java-junit
+          fail-on-error: false
+
+  # ── Nightly full regression (separate job) ────────────────────────
+  nightly-regression:
+    name: Nightly Full Regression (Chrome)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - uses: browser-actions/setup-chrome@v1
+      - name: Run Full Regression
+        run: |
+          mvn test \
+            -Dsuite=suites/full-regression.xml \
+            -Dbrowser=chrome \
+            -Dheadless=true \
+            -Dthreads=4 \
+            --no-transfer-progress -B
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-regression-report
+          path: reports/html/
+          retention-days: 30
