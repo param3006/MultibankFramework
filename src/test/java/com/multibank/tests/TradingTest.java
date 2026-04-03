@@ -191,8 +191,6 @@ public class TradingTest extends BaseTest {
         soft.assertAll();
     }
 
-    // ── Data Providers ────────────────────────────────────────────────
-
     @DataProvider(name = "categoryTabSwitchData", parallel = false)
     public Object[][] categoryTabSwitchData() {
         @SuppressWarnings("unchecked")
