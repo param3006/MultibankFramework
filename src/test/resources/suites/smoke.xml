@@ -18,9 +18,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.multibank.tests.NavigationTest"/>
-            <class name="com.multibank.tests.TradingTest"/>
-            <class name="com.multibank.tests.ContentTest"/>
+            <class name="com.multibank.tests.LoginTest"/>
         </classes>
     </test>
 

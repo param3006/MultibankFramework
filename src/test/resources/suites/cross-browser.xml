@@ -74,7 +74,7 @@
     <test name="Edge – Content">
         <parameter name="browser" value="edge"/>
         <classes>
-            <class name="com.multibank.tests.ContentTest"/>
+            <class name="com.multibank.tests.LoginTest"/>
         </classes>
     </test>
 

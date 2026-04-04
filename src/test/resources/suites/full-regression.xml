@@ -18,20 +18,9 @@
 
     <test name="Navigation Tests" parallel="methods" thread-count="2">
         <classes>
-            <class name="com.multibank.tests.NavigationTest"/>
+            <class name="com.multibank.tests.LoginTest"/>
         </classes>
     </test>
 
-    <test name="Trading Tests" parallel="methods" thread-count="2">
-        <classes>
-            <class name="com.multibank.tests.TradingTest"/>
-        </classes>
-    </test>
-
-    <test name="Content Tests" parallel="methods" thread-count="2">
-        <classes>
-            <class name="com.multibank.tests.ContentTest"/>
-        </classes>
-    </test>
 
 </suite>

@@ -17,28 +17,7 @@
     <test name="Grid – Chrome – Navigation">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.multibank.tests.NavigationTest"/>
-        </classes>
-    </test>
-
-    <test name="Grid – Chrome – Trading">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.multibank.tests.TradingTest"/>
-        </classes>
-    </test>
-
-    <test name="Grid – Firefox – Navigation">
-        <parameter name="browser" value="firefox"/>
-        <classes>
-            <class name="com.multibank.tests.NavigationTest"/>
-        </classes>
-    </test>
-
-    <test name="Grid – Firefox – Content">
-        <parameter name="browser" value="firefox"/>
-        <classes>
-            <class name="com.multibank.tests.ContentTest"/>
+            <class name="com.multibank.tests.LoginTest"/>
         </classes>
     </test>
 

@@ -1,9 +1,7 @@
 package com.multibank.tests;
 
-import com.multibank.pages.AboutPage;
-import com.multibank.pages.HomePage;
+import com.multibank.pages.LoginPage;
 import com.multibank.utils.TestDataLoader;
-import com.multibank.utils.WaitUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.*;
@@ -12,21 +10,21 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class ContentTest extends BaseTest {
+public class LoginTest extends BaseTest {
 
-    private HomePage homePage;
+    private LoginPage loginPage;
     private Map<String, Object> testData;
 
     @BeforeMethod(alwaysRun = true)
     public void initPage() {
-        homePage = new HomePage();
-        testData = TestDataLoader.loadJson("testdata/content.json");
+        loginPage = new LoginPage();
+        testData = TestDataLoader.loadJson("testdata/login.json");
     }
 
 
     @Test(
-        description = "TC-CONTENT-001 | Marketing banners are present at the page bottom",
-        groups       = {"regression", "content"}
+        description = "TC-CONTENT-001 | Perform Login",
+        groups       = {"regression", "login"}
     )
     public void testMarketingBannersPresent() {
         int minBanners = TestDataLoader.getInt(testData, "minimumBannerCount", 1);
