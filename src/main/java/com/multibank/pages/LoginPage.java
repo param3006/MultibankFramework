@@ -24,13 +24,31 @@ public class LoginPage extends BasePage{
         return isElementVisible(By.xpath("//span[contains(text(),'Log In')]"));
     }
 
-    public void typeUserName(String text){
+    private void typeUserName(String username){
         try {
             safeClick(userName);
-            type(text,userName);
+            type(username,userName);
         } catch (ElementClickInterceptedException e) {
             jsClick(userName);
         }
+    }
 
+    private void typePassword(String password){
+        try{
+            safeClick(this.password);
+            type(password,this.password);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void clickLoginButton(){
+        safeClick(loginBtn);
+    }
+
+    public void performLogin(String username,String password){
+        typeUserName(username);
+        typePassword(password);
+        clickLoginButton();
     }
 }

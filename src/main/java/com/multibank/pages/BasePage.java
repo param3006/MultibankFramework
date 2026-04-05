@@ -79,10 +79,12 @@ public abstract class BasePage {
         }
     }
 
-    protected void type(String textToType,WebElement locator){
+    protected void type(String textToType,WebElement element){
         try{
-            safeClick(locator);
-            locator.sendKeys(textToType);
+            safeClick(element);
+            waitForClickable(element);
+            element.sendKeys(textToType);
+            log.info("Sent keys");
         }catch (NoSuchElementException noSuchElementException){
             throw new java.util.NoSuchElementException("Element does not exist");
         }

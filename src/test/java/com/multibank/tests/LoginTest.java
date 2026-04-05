@@ -26,8 +26,8 @@ public class LoginTest extends BaseTest {
         description = "TC-CONTENT-001 | Perform Login",
         groups       = {"regression", "login"}
     )
-    public void testMarketingBannersPresent() {
-        loginPage.typeUserName(testData.get("username").toString());
+    public void testLoginFlow() {
+        loginPage.performLogin(testData.get("username").toString(),testData.get("password").toString());
     }
 
 
