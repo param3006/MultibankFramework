@@ -1,8 +1,16 @@
 {
-  "description": "Test data for ContentTest – all expected values externalised here",
-  "username": "parampreetsingh.p@outlook.com",
-  "password": "Param@9686",
-  "appStoreDomain": "apple.com",
-  "googlePlayDomain": "play.google.com",
-  "aboutPagePath": "https://trade.mb.io/login?next=%2F"
+  "loginTests": [
+    {
+      "username": "parampreetsingh.p@outlook.com",
+      "password": "Param@9686"
+    },
+    {
+      "username": "invalidUser@test.com",
+      "password": "WrongPass"
+    },
+    {
+      "username": "",
+      "password": "NoUsername"
+    }
+  ]
 }

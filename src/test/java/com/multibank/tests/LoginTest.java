@@ -1,6 +1,8 @@
 package com.multibank.tests;
 
+import com.multibank.models.LoginData;
 import com.multibank.pages.LoginPage;
+import com.multibank.tests.DataProvider.DataProviders;
 import com.multibank.utils.TestDataLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
@@ -22,12 +24,14 @@ public class LoginTest extends BaseTest {
     }
 
 
+
     @Test(
         description = "TC-CONTENT-001 | Perform Login",
-        groups       = {"regression", "login"}
+        groups       = {"regression", "login"},
+            dataProvider = "loginData", dataProviderClass = DataProviders.class
     )
-    public void testLoginFlow() {
-        loginPage.performLogin(testData.get("username").toString(),testData.get("password").toString());
+    public void testLoginFlow(LoginData data) {
+        loginPage.performLogin(data.username, data.password);
     }
 
 

@@ -1,10 +1,15 @@
 package com.multibank.utils;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.multibank.models.LoginData;
+import com.multibank.models.LoginTestData;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -37,8 +42,6 @@ public final class TestDataLoader {
         }
     }
 
-
-    //Loads a YAML file from the classpath and returns it as a generic map.
     public static Map<String, Object> loadYaml(String classpathFile) {
         try (InputStream is = getStream(classpathFile)) {
             MapType type = YAML_MAPPER.getTypeFactory()
@@ -49,7 +52,15 @@ public final class TestDataLoader {
         }
     }
 
-
+    public static LoginTestData loadLoginData(String classpathFile){
+        try{
+            return JSON_MAPPER.readValue(new File(classpathFile), LoginTestData.class);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Cannot Read file");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static List<String> getList(Map<String, Object> data, String key) {
         Object value = data.get(key);
