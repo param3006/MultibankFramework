@@ -45,7 +45,7 @@ public class TestListener implements ITestListener, ISuiteListener {
     @Override
     public void onTestFailure(ITestResult result) {
         String testName = result.getMethod().getMethodName();
-        log.error("✘  FAIL – {}: {}", testName, result.getThrowable().getMessage());
+        log.error("✘  FAIL – {}: {}", testName, result.getThrowable().getStackTrace());
 
         ExtentTest test = ExtentReportManager.getTest();
         if (test == null) return;
