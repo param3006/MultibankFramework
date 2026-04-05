@@ -29,7 +29,6 @@ public final class TestDataLoader {
         }
     }
 
-    /** Loads a JSON file and deserialises it directly into a POJO. */
     public static <T> T loadJson(String classpathFile, Class<T> type) {
         try (InputStream is = getStream(classpathFile)) {
             return JSON_MAPPER.readValue(is, type);
