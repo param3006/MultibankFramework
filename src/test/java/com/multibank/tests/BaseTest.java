@@ -40,7 +40,7 @@ public abstract class BaseTest {
         log.info("Navigated to base URL: {}", BASE_URL);
     }
 
-    @AfterMethod(enabled = false)
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         DriverFactory.quitDriver();
         log.info("Driver quit for thread [{}]", Thread.currentThread().getName());

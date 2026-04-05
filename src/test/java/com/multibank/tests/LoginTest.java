@@ -23,8 +23,6 @@ public class LoginTest extends BaseTest {
         testData = TestDataLoader.loadJson("testdata/login.json");
     }
 
-
-
     @Test(
         description = "TC-CONTENT-001 | Perform Login",
         groups       = {"regression", "login"},
