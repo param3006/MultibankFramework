@@ -35,7 +35,7 @@ public class APIClient {
                 .setBaseUri(builder.baseUrl)
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
-                .addFilter(new AllureRestAssured());   // Allure step attachment
+//                .addFilter(new AllureRestAssured());
 
         if (config.logRequests()) {
             specBuilder.addFilter(new RequestLoggingFilter(LogDetail.ALL));
