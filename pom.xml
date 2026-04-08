@@ -11,7 +11,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>MultiBank QA Automation Framework</name>
-    <description>Production-grade Selenium + TestNG framework for trade.multibank.io</description>
+    <description>Multi Bank Framework</description>
 
     <properties>
         <java.version>17</java.version>
@@ -26,7 +26,11 @@
 
         <!-- Reporting -->
         <extentreports.version>5.1.2</extentreports.version>
-        <extentreports-testng.version>1.3.0</extentreports-testng.version>
+        <extentreports-testng.version>1.2.2</extentreports-testng.version>
+
+        <json-schema-validator.version>5.4.0</json-schema-validator.version>
+
+        <restassured.version>6.0.0</restassured.version>
 
         <!-- Utility -->
         <jackson.version>2.17.1</jackson.version>
@@ -35,6 +39,8 @@
         <lombok.version>1.18.32</lombok.version>
         <assertj.version>3.26.0</assertj.version>
         <faker.version>1.0.2</faker.version>
+        <owner.version>1.0.12</owner.version>
+
 
         <!-- Maven plugins -->
         <maven-surefire.version>3.2.5</maven-surefire.version>
@@ -64,6 +70,17 @@
             <version>${webdrivermanager.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>${owner.version}</version>
+        </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>6.0.0</version>
+        </dependency>
         <!-- ── TestNG ─────────────────────────────────────────────── -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -96,7 +113,12 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-
+        <!-- Source: https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.5.0</version>
+        </dependency>
         <!-- ── Logging ───────────────────────────────────────────── -->
         <dependency>
             <groupId>org.slf4j</groupId>
