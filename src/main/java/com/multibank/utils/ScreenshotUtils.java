@@ -14,12 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Captures browser screenshots and saves them to {@code reports/screenshots/}.
- *
- * <p>Returns the absolute path of the saved file so that test listeners can
- * attach it to ExtentReports or any CI artefact store.
- */
+
 @Slf4j
 public final class ScreenshotUtils {
 
@@ -28,14 +23,7 @@ public final class ScreenshotUtils {
         DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
 
     private ScreenshotUtils() {}
-
-    /**
-     * Takes a screenshot and saves it under {@code reports/screenshots/<testName>_<timestamp>.png}.
-     *
-     * @param driver   WebDriver instance to screenshot
-     * @param testName logical name of the failing test (used in file name)
-     * @return absolute path of the saved screenshot, or {@code null} on failure
-     */
+    
     public static String capture(WebDriver driver, String testName) {
         if (!(driver instanceof TakesScreenshot ts)) {
             log.warn("Driver does not support screenshots");
@@ -55,7 +43,6 @@ public final class ScreenshotUtils {
         }
     }
 
-    /** Returns the screenshot as a byte array (for embedding in HTML reports). */
     public static byte[] captureAsBytes(WebDriver driver) {
         if (driver instanceof TakesScreenshot ts) {
             try {
@@ -66,8 +53,6 @@ public final class ScreenshotUtils {
         }
         return new byte[0];
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────
 
     private static String sanitise(String input) {
         return input == null ? "unknown" : input.replaceAll("[^a-zA-Z0-9_\\-]", "_");
